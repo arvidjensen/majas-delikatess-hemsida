@@ -1,4 +1,4 @@
----
+﻿---
 import '../styles/global.css'
 import FacebookFeed from '../components/FacebookFeed.tsx'
 import { Image } from 'astro:assets';
@@ -7,14 +7,92 @@ import galleryData from '../data/gallery.json';
 
 const GALLERY_PREVIEW_COUNT = 12;
 const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
+
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://majasdelikatess.se').replace(/\/$/, '');
+const PAGE_PATH = '/';
+const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
+const PAGE_TITLE = "Maja's Delikatess i Fritsla - Ost, charkuterier & delikatesser";
+const PAGE_DESCRIPTION = 'Delikatessbutik i Fritsla. Ost, charkuterier, lemonader och konfektyr - och annat smatt & gott. Forlaggarevagen 27, Fritsla.';
+const OG_IMAGE_URL = `${SITE_URL}/images/omslagsbild.jpg`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      inLanguage: 'sv-SE',
+      name: "Maja's Delikatess i Fritsla",
+      alternateName: "Maja's Delikatess"
+    },
+    {
+      '@type': 'GroceryStore',
+      '@id': `${SITE_URL}/#localbusiness`,
+      name: "Maja's Delikatess i Fritsla",
+      url: CANONICAL_URL,
+      image: OG_IMAGE_URL,
+      description: PAGE_DESCRIPTION,
+      telephone: '+46704233237',
+      email: 'lotta10099@hotmail.com',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Forlaggarevagen 27',
+        postalCode: '511 72',
+        addressLocality: 'Fritsla',
+        addressRegion: 'Vastra Gotalands lan',
+        addressCountry: 'SE'
+      },
+      hasMap: 'https://www.google.com/maps/search/?api=1&query=F%C3%B6rl%C3%A4ggarev%C3%A4gen+27+Fritsla',
+      areaServed: ['Fritsla', 'Mark kommun', 'Boras', 'Sjuharad'],
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Tuesday',
+          opens: '10:00',
+          closes: '18:00'
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Wednesday', 'Thursday', 'Friday'],
+          opens: '10:00',
+          closes: '18:00'
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Saturday',
+          opens: '10:00',
+          closes: '15:00'
+        }
+      ],
+      sameAs: ['https://www.facebook.com/100075921818044']
+    }
+  ]
+};
 ---
 
 <html lang="sv" class="scroll-smooth" style="scroll-padding-top: 6rem;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maja's Delikatess i Fritsla &ndash; Ost, charkuterier &amp; delikatesser</title>
-  <meta name="description" content="Delikatessbutik i Fritsla. Ost, charkuterier, lemonader och konfektyr &ndash; och annat sm&aring;tt &amp; gott. F&ouml;rl&auml;ggarev&auml;gen 27, Fritsla." />
+  <title>{PAGE_TITLE}</title>
+  <meta name="description" content={PAGE_DESCRIPTION} />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href={CANONICAL_URL} />
+  <link rel="alternate" hreflang="sv-SE" href={CANONICAL_URL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="sv_SE" />
+  <meta property="og:site_name" content="Maja's Delikatess i Fritsla" />
+  <meta property="og:title" content={PAGE_TITLE} />
+  <meta property="og:description" content={PAGE_DESCRIPTION} />
+  <meta property="og:url" content={CANONICAL_URL} />
+  <meta property="og:image" content={OG_IMAGE_URL} />
+  <meta property="og:image:alt" content="Maja's Delikatess i Fritsla" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={PAGE_TITLE} />
+  <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+  <meta name="twitter:image" content={OG_IMAGE_URL} />
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1146,7 +1224,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
       transform: scaleX(-1);
     }
 
-    /* ===== STANDARDSORTIMENT — Round Product Rings ===== */
+    /* ===== STANDARDSORTIMENT â€” Round Product Rings ===== */
     .standardsortiment-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1759,7 +1837,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
         staticPosts={[
           {
             id: "1",
-            message: "Ny leverans av lagrade ostar har landat i butiken! Vi har f\u00e5tt in en fantastisk Pr\u00e4st 24 m\u00e5nader och en krämig Brillat-Savarin fr\u00e5n Frankrike. Perfekt till helgens ostbricka \u2013 kom f\u00f6rbi och provsmaka!",
+            message: "Ny leverans av lagrade ostar har landat i butiken! Vi har f\u00e5tt in en fantastisk Pr\u00e4st 24 m\u00e5nader och en krÃ¤mig Brillat-Savarin fr\u00e5n Frankrike. Perfekt till helgens ostbricka \u2013 kom f\u00f6rbi och provsmaka!",
             full_picture: "/images/produkt_ost.jpg",
             created_time: "2026-02-14T10:30:00+0100",
             permalink_url: "https://www.facebook.com/100075921818044"
@@ -1893,7 +1971,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
 
       <!-- Product rings -->
       <div class="standardsortiment-grid mb-16">
-        <!-- Rent Smör -->
+        <!-- Rent SmÃ¶r -->
         <div class="product-ring-wrap anim-fade-up">
           <div class="product-ring" onclick="openModal('rent-smor')">
             <div class="ring-outer">
@@ -1909,7 +1987,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
           </div>
         </div>
 
-        <!-- Gruyère -->
+        <!-- GruyÃ¨re -->
         <div class="product-ring-wrap anim-fade-up delay-1">
           <div class="product-ring" onclick="openModal('gruyere')">
             <div class="ring-outer">
@@ -1925,7 +2003,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
           </div>
         </div>
 
-        <!-- Tunnbrödschips -->
+        <!-- TunnbrÃ¶dschips -->
         <div class="product-ring-wrap anim-fade-up delay-2">
           <div class="product-ring" onclick="openModal('tunnbrodschips')">
             <div class="ring-outer">
@@ -1959,7 +2037,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
     <div class="modal-label">
       <button class="modal-close-btn" id="modal-close" aria-label="St&auml;ng">&times;</button>
 
-      <!-- Rent Smör — Etikett popup -->
+      <!-- Rent SmÃ¶r â€” Etikett popup -->
       <div class="popup-etikett" id="modal-content-rent-smor" style="display:none;">
         <div class="popup-label">
           <div class="popup-border-outer">
@@ -2030,7 +2108,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
         </div>
       </div>
 
-      <!-- Gruyère — Etikett popup -->
+      <!-- GruyÃ¨re â€” Etikett popup -->
       <div class="popup-etikett" id="modal-content-gruyere" style="display:none;">
         <div class="popup-label">
           <div class="popup-border-outer">
@@ -2101,7 +2179,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
         </div>
       </div>
 
-      <!-- Tunnbrödschips — Etikett popup -->
+      <!-- TunnbrÃ¶dschips â€” Etikett popup -->
       <div class="popup-etikett" id="modal-content-tunnbrodschips" style="display:none;">
         <div class="popup-label">
           <div class="popup-border-outer">
@@ -2285,7 +2363,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
           </p>
         </div>
 
-        <!-- Güntensperger -->
+        <!-- GÃ¼ntensperger -->
         <div class="producer-card anim-fade-up delay-1">
           <span class="producer-location">Toggenburg, Schweiz</span>
           <h3 class="producer-name">G&uuml;ntensperger</h3>
@@ -2315,7 +2393,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
           </p>
         </div>
 
-        <!-- Gunnarshögs -->
+        <!-- GunnarshÃ¶gs -->
         <div class="producer-card anim-fade-up delay-4">
           <span class="producer-location">&Ouml;sterlen, Sverige</span>
           <h3 class="producer-name">Gunnarsh&ouml;gs G&aring;rd</h3>
@@ -2325,7 +2403,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
           </p>
         </div>
 
-        <!-- Sövde -->
+        <!-- SÃ¶vde -->
         <div class="producer-card anim-fade-up delay-5">
           <span class="producer-location">Sk&aring;ne, Sverige</span>
           <h3 class="producer-name">S&ouml;vde Musteri</h3>
@@ -2667,7 +2745,7 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
       // This prevents invisible content on mobile if animations/observer fail.
       setTimeout(revealAll, 3000);
 
-      // Hero animations are already running via CSS — no JS override needed
+      // Hero animations are already running via CSS â€” no JS override needed
 
       // Smooth parallax effect on hero background
       const heroImg = document.querySelector('#start > div:first-child img');
@@ -2896,3 +2974,4 @@ const galleryPreview = galleryData.slice(0, GALLERY_PREVIEW_COUNT);
 
 </body>
 </html>
+
